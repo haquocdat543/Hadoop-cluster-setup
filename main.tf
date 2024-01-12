@@ -169,7 +169,7 @@ resource "aws_instance" "HadoopMaster" {
   instance_type     = "t3.small"
   availability_zone = "ap-northeast-1a"
   key_name          = var.key_pair
-  user_data         = file("../../scripts/nginx.sh")
+  user_data         = file("./scripts/master.sh")
 
   network_interface {
     device_index         = 0
@@ -186,7 +186,7 @@ resource "aws_instance" "HadoopWorker1" {
   instance_type     = "t3.small"
   availability_zone = "ap-northeast-1a"
   key_name          = var.key_pair
-  user_data         = file("../../scripts/worker.sh")
+  user_data         = file("./scripts/worker1.sh")
 
   network_interface {
     device_index         = 0
@@ -197,12 +197,13 @@ resource "aws_instance" "HadoopWorker1" {
     "Name" = "HadoopWorker1"
   }
 }
+
 resource "aws_instance" "HadoopWorker2" {
   ami               = var.ami_id
   instance_type     = "t3.small"
   availability_zone = "ap-northeast-1a"
   key_name          = var.key_pair
-  user_data         = file("../../scripts/worker.sh")
+  user_data         = file("./scripts/worker2.sh")
 
   network_interface {
     device_index         = 0
@@ -214,6 +215,22 @@ resource "aws_instance" "HadoopWorker2" {
   }
 }
 
+resource "aws_instance" "HadoopWorker3" {
+  ami               = var.ami_id
+  instance_type     = "t3.small"
+  availability_zone = "ap-northeast-1a"
+  key_name          = var.key_pair
+  user_data         = file("./scripts/worker3.sh")
+
+  network_interface {
+    device_index         = 0
+    network_interface_id = aws_network_interface.HadoopWorker3.id
+  }
+
+  tags = {
+    "Name" = "HadoopWorker3"
+  }
+}
 #Output
 output "HadoopMaster" {
   value = "ssh -i ~/${var.key_pair}.pem ec2-user@${aws_eip.HadoopMaster.public_ip}"
