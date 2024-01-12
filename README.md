@@ -1,6 +1,34 @@
 # Hadoop-cluster-setup
 This is a demonstration of using Terraform to setup Hadoop cluster
-## Files
+## 1. Setup hosts
+```
+sudo su -
+vi /etc/hosts
+G
+o
+35.74.151.181 hadoop1
+52.68.15.189 hadoop2
+43.207.243.198 hadoop3
+54.92.25.9 hadoop4
+```
+
+## 2. Environment
+```
+# Set hadoop environment variables
+export HADOOP_HOME=$HOME/hadoop
+export HADOOP_CONF_DIR=$HOME/hadoop/etc/hadoop
+export HADOOP_MAPRED_HOME=$HOME/hadoop
+export HADOOP_COMMON_HOME=$HOME/hadoop
+export HADOOP_HDFS_HOME=$HOME/hadoop
+export YARN_HOME=$HOME/hadoop
+export PATH=$PATH:$HOME/hadoop/bin
+
+# Set Java environment variables
+export JAVA_HOME=$HOME/jre-opensdk
+export PATH=$HOME/jre-opensdk/bin:$PATH
+```
+
+## 3. Files
 `~/hadoop/etc/hadoop/hdfs-site.xml`
 ```
 <configuration>
@@ -76,4 +104,23 @@ This is a demonstration of using Terraform to setup Hadoop cluster
    </property> 
 </configuration>
 ```
-
+## 4. Copy files
+```
+cp ~/hadoop/etc/hadoop/mapred-site.xml.template ~/hadoop/etc/hadoop/mapred-site.xml
+```
+## 5. On Master
+```
+hdfs namenode -format
+```
+```
+cd $HADOOP_HOME
+./sbin/start-all.sh
+```
+## 6. Check daemon Master
+```
+jps
+```
+## 7. Access website
+```
+http://master:50070/dfshealth.html
+```
