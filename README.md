@@ -98,6 +98,7 @@ o
     </property>
 </configuration>
 ```
+Master
 `vi ~/hadoop/etc/hadoop/hdfs-site.xml`
 ```
 vi ~/hadoop/etc/hadoop/hdfs-site.xml
@@ -110,18 +111,54 @@ dd
 o
 <configuration>
     <property>
-            <name>dfs.namenode.name.dir</name>
-            <value>/home/hadoop/data/nameNode</value>
+        <name>dfs.replication</name>
+        <value>2</value>
     </property>
-
     <property>
-            <name>dfs.datanode.data.dir</name>
-            <value>/home/hadoop/data/dataNode</value>
+        <name>dfs.permissions.enabled</name>
+        <value>true</value>
     </property>
-
     <property>
-            <name>dfs.replication</name>
-            <value>1</value>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>hadoop1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/home/ubuntu/hadoop/namenode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/home/ubuntu/hadoop/datanode</value>
+    </property>
+</configuration>
+```
+Slave
+`vi ~/hadoop/etc/hadoop/hdfs-site.xml`
+```
+vi ~/hadoop/etc/hadoop/hdfs-site.xml
+:set paste
+G
+dd
+dd
+dd
+dd
+o
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>hadoop1:50090</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/home/ubuntu/hadoop/datanode</value>
     </property>
 </configuration>
 ```
@@ -136,31 +173,16 @@ dd
 dd
 dd
 o
-<configuration>
-<property>
-        <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>1536</value>
-</property>
-
-<property>
-        <name>yarn.scheduler.maximum-allocation-mb</name>
-        <value>1536</value>
-</property>
-
-<property>
-        <name>yarn.scheduler.minimum-allocation-mb</name>
-        <value>128</value>
-</property>
-
-<property>
-        <name>yarn.nodemanager.vmem-check-enabled</name>
-        <value>false</value>
-</property>
-<property>
-        <name>yarn.resourcemanager.hostname</name>
-        <value>hadoop1</value>
-</property>
-</configuration>
+configuration>
+   <property>
+       <name>yarn.nodemanager.aux-services</name>
+       <value>mapreduce_shuffle</value>
+   </property>
+   <property>
+       <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
+       <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+   </property>
+/configuration>
 ```
 `vi ~/hadoop/etc/hadoop/mapred-site.xml`
 ```
@@ -173,21 +195,9 @@ dd
 o
 <configuration>
     <property>
-        <name>yarn.app.mapreduce.am.resource.mb</name>
-        <value>512</value>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
     </property>
-    <property>
-        <name>mapreduce.map.memory.mb</name>
-        <value>256</value>
-    </property>
-    <property>
-        <name>mapreduce.reduce.memory.mb</name>
-        <value>256</value>
-    </property>
-   <property> 
-      <name>mapreduce.jobtracker.address</name> 
-      <value>hadoop1:9001</value> 
-   </property> 
 </configuration>
 ```
 ## 13. Generate key
