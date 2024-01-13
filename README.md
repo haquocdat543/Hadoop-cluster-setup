@@ -52,10 +52,9 @@ export PATH=$PATH:$HOME/hadoop/bin
 # Set Java environment variables
 export JAVA_HOME=$HOME/jre-opensdk
 export PATH=$HOME/jre-opensdk/bin:$PATH
-```
 
 ## 3. Files
-`~/hadoop/etc/hadoop/hdfs-site.xml`
+`vi ~/hadoop/etc/hadoop/hdfs-site.xml`
 ```
 <configuration>
     <property>
@@ -64,7 +63,7 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
     </property>
 </configuration>
 ```
-`~/hadoop/etc/hadoop/hdfs-site.xml`
+`vi ~/hadoop/etc/hadoop/hdfs-site.xml`
 ```
 <configuration>
     <property>
@@ -83,7 +82,7 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
     </property>
 </configuration>
 ```
-`~/hadoop/etc/hadoop/yarn-site.xml`
+`vi ~/hadoop/etc/hadoop/yarn-site.xml`
 ```
 <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
@@ -109,7 +108,7 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
         <value>hadoop1</value>
 </property>
 ```
-`~/hadoop/etc/hadoop/mapred-site.xml`
+`vi ~/hadoop/etc/hadoop/mapred-site.xml`
 ```
 <configuration>
     <property>
