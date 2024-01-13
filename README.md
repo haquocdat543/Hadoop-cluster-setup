@@ -33,6 +33,8 @@ terraform destroy --auto-approve
 sudo su -
 apt-get update
 apt-get upgrade -y
+```
+```
 apt-get install openjdk-8-jdk -y
 ```
 
@@ -173,7 +175,7 @@ dd
 dd
 dd
 o
-configuration>
+<configuration>
    <property>
        <name>yarn.nodemanager.aux-services</name>
        <value>mapreduce_shuffle</value>
@@ -182,7 +184,7 @@ configuration>
        <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
    </property>
-/configuration>
+</configuration>
 ```
 `vi ~/hadoop/etc/hadoop/mapred-site.xml`
 ```
