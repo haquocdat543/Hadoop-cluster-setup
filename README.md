@@ -38,7 +38,6 @@ apt-get install openjdk-8-jdk -y
 
 ## 7. Set hostname
 ```
-sudo su -
 vi /etc/hosts
 G
 o
@@ -50,6 +49,7 @@ o
 
 ## 8. Environment
 ```
+su - ubuntu
 vi ~/.bashrc
 :set paste
 G
@@ -194,23 +194,60 @@ o
    </property> 
 </configuration>
 ```
-## 13. Copy files
+## 13. Generate key
 ```
-cp ~/hadoop/etc/hadoop/mapred-site.xml.template ~/hadoop/etc/hadoop/mapred-site.xml
+ssh-keygen -b 4096
+
+
+
+
+
 ```
-## 14. On Master
 ```
+vi ~/.ssh/master_rsa
+```
+```
+chmod 600 ~/.ssh/master_rsa
+```
+```
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop1 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+```
+```
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop2 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+```
+```
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop3 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+```
+```
+cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop4 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
+```
+
+## 14. Environment
+```
+sudo su -
+vi /etc/environment
+G
+o
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+```
+```
+source /etc/environment
+```
+
+## 15. On Master
+```
+su - ubuntu
 hdfs namenode -format
 ```
 ```
 cd $HADOOP_HOME
 ./sbin/start-all.sh
 ```
-## 15. Check daemon Master
+## 16. Check daemon Master
 ```
 jps
 ```
-## 16. Access website
+## 17. Access website
 ```
-http://master:50070/dfshealth.html
+http://master:50070
 ```
