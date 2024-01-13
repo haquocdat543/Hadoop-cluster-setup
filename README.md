@@ -1,7 +1,33 @@
-# Hadoop-cluster-setup
+## Hadoop-cluster-setup
 This is a demonstration of using Terraform to setup Hadoop cluster
-## 1. Setup hosts
+## Prerequisites
+* [git](https://git-scm.com/downloads)
+* [awscli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+* [config-profile](https://docs.aws.amazon.com/cli/latest/reference/configure/)
+* [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+## 1. Build image
+Go to [Packer-Hadoop](https://github.com/haquocdat543/Packer-Hadoop.git) and follow instruction to build image
+## 2. Clone repository
 ```
+git clone https://github.com/haquocdat543/Hadoop-cluster-setup.git
+cd Hadoop-cluster-setup
+```
+## 3. Reconfigure
+* Edit `ami-id` in `variable.tf` you have created in `Step 1`
+## 4. Initialize infrastructure
+```
+terraform init
+```
+```
+terraform apply --auto-approve
+```
+Then type your keypair name. If you dont have, create one. [Keypair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html)
+
+## 5. Destroy infrastructure
+```
+terraform destroy --auto-approve
+```
+
 sudo su -
 vi /etc/hosts
 G
