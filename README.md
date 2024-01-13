@@ -43,8 +43,6 @@ G
 o
 35.74.151.181 hadoop1
 52.68.15.189 hadoop2
-43.207.243.198 hadoop3
-54.92.25.9 hadoop4
 ```
 
 ## 8. Environment
@@ -83,8 +81,6 @@ vi ~/hadoop/etc/hadoop/slaves
 G
 o
 hadoop2
-hadoop3
-hadoop4
 ```
 ## 11. Files
 `vi ~/hadoop/etc/hadoop/core-site.xml`
@@ -214,12 +210,6 @@ cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop1 'mkdir -p ~/.ssh
 ```
 ```
 cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop2 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
-```
-```
-cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop3 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
-```
-```
-cat ~/.ssh/id_rsa.pub | ssh -i ~/.ssh/master_rsa ubuntu@hadoop4 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys'
 ```
 
 ## 14. Environment
