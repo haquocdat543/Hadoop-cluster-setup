@@ -28,6 +28,16 @@ Then type your keypair name. If you dont have, create one. [Keypair](https://doc
 terraform destroy --auto-approve
 ```
 
+## 6. Install JDK
+```
+sudo su -
+apt-get update
+apt-get upgrade -y
+apt-get install openjdk-8-jdk -y
+```
+
+## 7. Set hostname
+```
 sudo su -
 vi /etc/hosts
 G
@@ -38,8 +48,12 @@ o
 54.92.25.9 hadoop4
 ```
 
-## 2. Environment
+## 8. Environment
 ```
+vi ~/.bashrc
+:set paste
+G
+o
 # Set hadoop environment variables
 export HADOOP_HOME=$HOME/hadoop
 export HADOOP_CONF_DIR=$HOME/hadoop/etc/hadoop
@@ -50,12 +64,37 @@ export YARN_HOME=$HOME/hadoop
 export PATH=$PATH:$HOME/hadoop/bin
 
 # Set Java environment variables
-export JAVA_HOME=$HOME/jre-opensdk
-export PATH=$HOME/jre-opensdk/bin:$PATH
-
-## 3. Files
-`vi ~/hadoop/etc/hadoop/hdfs-site.xml`
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=/usr/lib/jvm/java-8-openjdk-amd64/bin:$PATH
 ```
+
+## 9. Add Master
+```
+vi ~/hadoop/etc/hadoop/masters
+:set paste
+G
+o
+hadoop1
+```
+## 10. Add Slaves
+```
+vi ~/hadoop/etc/hadoop/slaves
+:set paste
+G
+o
+hadoop2
+hadoop3
+hadoop4
+```
+## 11. Files
+`vi ~/hadoop/etc/hadoop/core-site.xml`
+```
+vi ~/hadoop/etc/hadoop/core-site.xml
+:set paste
+G
+dd
+dd
+o
 <configuration>
     <property>
         <name>fs.default.name</name>
@@ -65,6 +104,14 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
 ```
 `vi ~/hadoop/etc/hadoop/hdfs-site.xml`
 ```
+vi ~/hadoop/etc/hadoop/hdfs-site.xml
+:set paste
+G
+dd
+dd
+dd
+dd
+o
 <configuration>
     <property>
             <name>dfs.namenode.name.dir</name>
@@ -84,6 +131,16 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
 ```
 `vi ~/hadoop/etc/hadoop/yarn-site.xml`
 ```
+vi ~/hadoop/etc/hadoop/yarn-site.xml
+:set paste
+G
+dd
+dd
+dd
+dd
+dd
+o
+<configuration>
 <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
         <value>1536</value>
@@ -107,9 +164,17 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
         <name>yarn.resourcemanager.hostname</name>
         <value>hadoop1</value>
 </property>
+</configuration>
 ```
 `vi ~/hadoop/etc/hadoop/mapred-site.xml`
 ```
+vi ~/hadoop/etc/hadoop/mapred-site.xml
+:set paste
+G
+dd
+dd
+dd
+o
 <configuration>
     <property>
         <name>yarn.app.mapreduce.am.resource.mb</name>
@@ -129,11 +194,11 @@ export PATH=$HOME/jre-opensdk/bin:$PATH
    </property> 
 </configuration>
 ```
-## 4. Copy files
+## 13. Copy files
 ```
 cp ~/hadoop/etc/hadoop/mapred-site.xml.template ~/hadoop/etc/hadoop/mapred-site.xml
 ```
-## 5. On Master
+## 14. On Master
 ```
 hdfs namenode -format
 ```
@@ -141,11 +206,11 @@ hdfs namenode -format
 cd $HADOOP_HOME
 ./sbin/start-all.sh
 ```
-## 6. Check daemon Master
+## 15. Check daemon Master
 ```
 jps
 ```
-## 7. Access website
+## 16. Access website
 ```
 http://master:50070/dfshealth.html
 ```
